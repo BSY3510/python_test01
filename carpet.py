@@ -1,25 +1,19 @@
 def solution(brown, yellow):
-    width = 0       # width >= height
-    height = 0
-    answer = [width, height]
-    
-    for i in range(1, yellow+1) :
-        if (yellow % i == 0) :
-            y_w = yellow//i
-            y_h = i
+    # yellow의 약수를 찾아 가능한 가로와 세로 경우의 수를 계산
+    for i in range(1, int(yellow ** 0.5) + 1):
+        if yellow % i == 0:
+            y_w = yellow // i  # 노란 타일의 가로
+            y_h = i            # 노란 타일의 세로
             
-            temp = 1
-            temp_b = (y_w+temp + y_h+temp)*2
-            b = temp_b
-            while (brown > b) :
-                temp += 1
-                temp_b = (y_w+temp + y_h+temp)*2
-                b += temp_b
-                
-            if (b == brown) :
-                answer = [max(y_w+temp+1, y_h+temp+1), min(y_w+temp+1, y_h+temp+1)]
-    
-    return answer
+            # 전체 카펫의 가로와 세로 계산 (가로는 y_w + 2, 세로는 y_h + 2)
+            width = y_w + 2
+            height = y_h + 2
+            
+            # 전체 타일 수가 brown과 yellow의 합과 같은지 확인
+            if width * height == brown + yellow:
+                return [width, height]
+
+    return []
 
 brown = 24
 yellow = 24
